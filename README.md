@@ -1,6 +1,21 @@
-i am trying to add new feature to some of these scripts since funkin got a new update it also changed the json files variales and outdated the script the converter is being work on for now but still works!
+NOTICE
+I am trying to add new feature to some of these scripts since funkin got a new update it also changed the json files variales and outdated the script the converter is being work on for now but still works!
 
 barley working on depending on how this goes
+
+Hoping The Creator
+Can help me on this if he pleases
+I DEFINITLY NEED HELP If you want to help make sure to open a issue so i can know(yeah that how its gonna go)
+Things you can do
+Osu to Lua Script Most Importantly Need Work On 
+Osu to lua needs a updated Output scheme on the code (i think that will fix the crashing) because i think it trying to detect something but can't find 
+
+
+*Things I Did So Far*
+
+Added A gfVersion Text Thingie to the site maybe it might need that somehow
+gfVersion still needs to be implemented in the osu/lua code it been put in the website but not functional
+
 
 
 This tool can used to map FNF songs easier in osu or can be used to just import a song from osu.<br/>
