@@ -1,6 +1,7 @@
 'use strict';
 
-var slidercalc = module.require('slidercalc');
+var fs         = require('fs');
+var slidercalc = require('./lib/slidercalc.js');
 
 function beatmapParser() {
   var beatmap = {
@@ -138,6 +139,7 @@ function beatmapParser() {
 
     var hitObject = {
       startTime:  parseInt(members[2]),
+      endTime: parseInt(members[5]),
       newCombo:   ((objectType & 4) == 4),
       soundTypes: [],
       position: [
@@ -175,15 +177,6 @@ function beatmapParser() {
       hitObject.objectName = 'spinner';
       hitObject.endTime    = parseInt(members[5]);
       hitObject.additions  = parseAdditions(members[6]);
-
-    } else if (objectType == 128 || objectType == 132) {
-      beatmap.nbSliders++;
-      hitObject.objectName  = 'slider';
-      hitObject.endTime  = parseInt(members[5])
-      hitObject.duration = hitObject.endTime - hitObject.startTime
-
-      hitObject.edges       = [];
-
     } else if ((objectType & 2) == 2) {
       // Slider
       beatmap.nbSliders++;
@@ -210,7 +203,7 @@ function beatmapParser() {
       /**
        * Parse slider points
        */
-      var points = (members[5] || '').split('|');
+      var points = (members[5] || '').split('|');
       if (points.length) {
         hitObject.curveType = curveTypes[points[0]] || 'unknown';
 
@@ -265,7 +258,7 @@ function beatmapParser() {
       // Unknown
       hitObject.objectName = 'unknown';
     }
-		
+
     beatmap.hitObjects.push(hitObject);
   };
 
@@ -427,10 +420,10 @@ function beatmapParser() {
 
     objectLines.forEach(parseHitObject);
     beatmap.hitObjects.sort(function (a, b) { return (a.startTime > b.startTime ? 1 : -1); });
-		
+
     computeMaxCombo();
     computeDuration();
-		
+
     return beatmap;
   };
 
@@ -440,19 +433,79 @@ function beatmapParser() {
   };
 }
 
+
+
+/**
+ * Parse a .osu file
+ * @param  {String}   file  path to the file
+ * @param  {Function} callback(err, beatmap)
+ */
+exports.parseFile = function (file, callback) {
+  fs.exists(file, function (exists) {
+    if (!exists) {
+      callback(new Error('file does not exist'));
+      return;
+    }
+
+    var parser = beatmapParser();
+    var stream = fs.createReadStream(file);
+    var buffer = '';
+
+
+    stream.on('data', function (chunk) {
+      buffer   += chunk;
+      var lines = buffer.split(/\r?\n/);
+      buffer    = lines.pop() || '';
+      lines.forEach(parser.readLine);
+    });
+
+    stream.on('error', function (err) {
+      callback(err);
+    });
+
+    stream.on('end', function () {
+      buffer.split(/\r?\n/).forEach(parser.readLine);
+      callback(null, parser.buildBeatmap());
+    });
+  });
+};
+
+/**
+ * Parse a stream containing .osu content
+ * @param  {Stream}   stream
+ * @param  {Function} callback(err, beatmap)
+ */
+exports.parseStream = function (stream, callback) {
+  var parser = beatmapParser();
+  var buffer = '';
+
+  stream.on('data', function (chunk) {
+    buffer   += chunk.toString();
+    var lines = buffer.split(/\r?\n/);
+    buffer    = lines.pop() || '';
+    lines.forEach(parser.readLine);
+  });
+
+  stream.on('error', function (err) {
+    callback(err);
+  });
+
+  stream.on('end', function () {
+    buffer.split(/\r?\n/).forEach(parser.readLine);
+    callback(null, parser.buildBeatmap());
+  });
+};
+
 /**
  * Parse the content of a .osu
  * @param  {String|Buffer} content
  * @return {Object} beatmap
  */
-module.export("osuparser", {
-	parseContent: function (content) {
-	  var parser = beatmapParser();
-	  content.toString().split(/[\n\r]+/).forEach(function (line) {
-	    parser.readLine(line);
-	  });
-		
-		var rtv = parser.buildBeatmap();
-	  return rtv
-	}
-})
+exports.parseContent = function (content) {
+  var parser = beatmapParser();
+  content.toString().split(/[\n\r]+/).forEach(function (line) {
+    parser.readLine(line);
+  });
+
+  return parser.buildBeatmap();
+};
