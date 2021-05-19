@@ -1,3 +1,4 @@
+(DerpySlurrpe Note)
 NOTICE
 I am trying to add new feature to some of these scripts since funkin got a new update it also changed the json files variales and outdated the script the converter is being work on for now but still works!
 
@@ -17,6 +18,8 @@ Added A gfVersion Text Thingie to the site maybe it might need that somehow
 gfVersion still needs to be implemented in the osu/lua code it been put in the website but not functional
 
 
+
+How it Works?
 
 This tool can used to map FNF songs easier in osu or can be used to just import a song from osu.<br/>
 Mapping a song in osu:
