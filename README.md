@@ -1,3 +1,8 @@
+i am trying to add new feature to some of these scripts since funkin got a new update it also changed the json files variales and outdated the script the converter is being work on for now but still works!
+
+barley working on depending on how this goes
+
+
 This tool can used to map FNF songs easier in osu or can be used to just import a song from osu.<br/>
 Mapping a song in osu:
 1. Open the song and setup in 8K
