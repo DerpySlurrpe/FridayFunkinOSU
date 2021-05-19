@@ -59,6 +59,7 @@ $(function(){
 				"player2":$("#player2").val(),
 				"player1":$("#player1").val(),
 				"speed":$("#speed").val(),
+				"gfVersion":$("#gfVersion").val(),
 				"needsvoices":document.getElementById("needsvoices").checked,
 				"song":$("#song").val(),
 				"onlyp1":document.getElementById("onlyp1").checked
@@ -71,6 +72,7 @@ $(function(){
 <div class="content" style="display: block;">
 	RobeatsWebConvert2 by spotco - <a href="https://github.com/spotco/RobeatsWebConvert2">Source</a><br/>
 	osu to FNF web by woodyloody (me) - <a href="https://github.com/woodyloody/osu-to-FNF-web">Source</a><br/>
+	DerpySlurrpe For Making This Not Outdated And Fixing The Crashes For Update Version Of FNF
 </div>
 <br/>
 <button type="button" class="collapsible" value="Instructions: "><h2>Instructions: ∨</h2></button>
@@ -87,6 +89,9 @@ $(function(){
 	  If the map is not working make sure you added the correct song name in options which is the same as the folder in assets\songs<br/>
 	  Extra info:<br/>
 	  - The converter can take 4K maps but turn on the only player1 option for it to be mapped the same
+	  Derpy's Notes 
+	  This can crash if you go into debug menu in the game
+	  Trying to fix
   </p>
 </div>
 <br/>
@@ -96,14 +101,15 @@ $(function(){
 	Player1: <input id="player1" type="text" placeholder="Player1"> - Player1's name (Defaults to "bf")<br/>
 	Player2: <input id="player2" type="text" placeholder="Player2"> - Player2's name (Defaults to "dad")<br/>
 	BPM: <input id="bpm" type="text" placeholder="BPM"> - BPM of the song (Defaults to max bpm in osu file or 120 if none)<br/>
-	Speed: <input id="speed" type="text" placeholder="Speed"> - Note approach speed (Defaults to 1)<br/>
+	Girlfriend: <input id="gfVersion" type="text" placeholder="GirlfriendStyle"> - Changes The Version of GF (Default to ("gf")<br/>
+	Speed: <input id="speed" type="text" placeholder="Speed"> - Note approach speed (Defaults to 1 which is kinda too slow)<br/>
 	Needs voices: <input id="needsvoices" type="checkbox" placeholder="needsvoices"> - Does the song have a second file for voices (Defaults to false)<br/>
 	Only player1: <input id="onlyp1" type="checkbox" placeholder="onlyp1"> - All notes on player1's side (Defaults to false)<br/>
 </div>
 <br/>
 <button type="button" class="collapsible active" value="Converter: "><h2>Converter: ∧</h2></button>
 <div class="content" style="display: block;">
-	<textarea id="in" style="width:1000px;height:200px" placeholder="paste contents of osu file here"></textarea>
+	<textarea id="in" style="width:1000px;height:200px" placeholder="Open The Osu File And Copy The Text here"></textarea>
 	<br/>
 	<button id="submit">CONVERT</button>
 	<br/>
